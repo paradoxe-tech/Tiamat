@@ -1,0 +1,35 @@
+{
+  "main": {
+    "width": 960,
+    "height": 640,
+    "gravity": 0,
+    "resolution": 3
+  },
+  "progress": {
+    "day" : 0,
+    "gamevars": {
+      "global": {
+
+      },
+      "scenes": {
+        "Outside": {
+
+        }
+      }
+    }
+  },
+  "settings": {
+    "keys" : {
+      "forward": "Z",
+      "backward": "S",
+      "left": "Q",
+      "right": "D",
+      "interract": "SPACE"
+    },
+    "debug": false,
+    "zoom": 4
+  },
+  "player": {
+    "speed" : 50
+  }
+}

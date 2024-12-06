@@ -14,15 +14,15 @@ const args = {
   fps: 60,
   physics: {
     default: 'matter',
-    matter: {
+    arcade: {
       gravity: { y: config.main.gravity },
       debug: config.settings.debug
     }
   },
   render: {
-    antialias: false,
+    antialias: true,
     pixelArt: true,
-    roundPixels: true
+    roundPixels: false
   },
   scene: [
     new Map(config),

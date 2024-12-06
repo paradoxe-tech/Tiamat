@@ -3,6 +3,7 @@ import { get } from "../interface/get.js";
 
 const config = JSON.parse(get('/config'))
 const urlParams = new URLSearchParams(window.location.search);
+config.settings.debug = config.settings.debug || urlParams.has("debug")
 
 const args = {
   width: config.main.width,
@@ -15,7 +16,7 @@ const args = {
     default: 'matter',
     matter: {
       gravity: { y: config.main.gravity },
-      debug: urlParams.has("debug") || config.settings.debug
+      debug: config.settings.debug
     }
   },
   render: {

@@ -14,19 +14,21 @@ export class GameMap {
   build(layers) {
 
     const map = this.scene.make.tilemap({
-      key: "map", tileWidth: 16, tileHeigth: 16
+      key: "map", tileWidth: 16, tileHeight: 16
     });
 
     let tilesets = new Map();
 
-    for(var tileset of this.tilesets_names) {
-      tilesets.set(tileset, map.addTilesetImage(tileset, tileset));
+    for(var tileset_name of this.tilesets_names) {
+      tilesets.set(tileset_name, map.addTilesetImage(tileset_name, tileset_name));
     }
 
     for(var i=0; i<layers.length; i++) {
-      let layer = layers[i];
-      map.createStaticLayer(i, tilesets.get(layer), 0, 0);
+      let layer_name = layers[i];
+      map.createStaticLayer(layer_name, tilesets.get(layer_name), 0, 0);
     }
+
+    /*
 
     this.scene.hitboxes = this.scene.physics.add.group();
 
@@ -46,6 +48,8 @@ export class GameMap {
       rect.body.allowGravity = false;
       this.scene.hitboxes.add(rect);
     }
+
+    */
     
   }
 }

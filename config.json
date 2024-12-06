@@ -30,6 +30,6 @@
     "zoom": 4
   },
   "player": {
-    "speed" : 10
+    "speed" : 60
   }
 }

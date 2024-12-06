@@ -1,5 +1,7 @@
-import { GameMap } from "../classes/GameMap.js"
-import { Player } from "../classes/Player.js"
+import { GameMap } from "../classes/GameMap.js";
+import { Mob } from "../classes/Mob.js";
+import { Player } from "../classes/Player.js";
+import { get } from "../../interface/get.js";
 
 export class Map extends Phaser.Scene {
 
@@ -24,30 +26,55 @@ export class Map extends Phaser.Scene {
     this.map = new GameMap(
       this, 
       [
-        "hs","interiors", "walls" // example tilesets
+        "sea"
       ],
       `/assets/tilesets`,
-      `/assets/tilemaps/outside.json`
+      `/assets/tilemaps/world.json`
     );
+
+    this.spritesData = JSON.parse(get('/sprites'))
     
-    this.load.spritesheet(
-      'player', 
-      '/assets/sprites/player.png', 
-      { 
-        frameWidth : 18, 
-        frameHeight : 18 
-      }
-    )
+    for(let sprite of this.spritesData) {
+      this.load.spritesheet(
+        sprite.fileName, 
+        `./assets/sprites/${sprite.fileName}.png`, 
+        { 
+          frameWidth : sprite.width / sprite.cols, 
+          frameHeight : sprite.height / sprite.rows
+        }
+      )
+    }
+
+
     
   }
 
   create() {
 
+    this.input.on('pointermove', (pointer) => {
+      this.pointer = pointer;
+    });
+
     this.map.build([
-      "walls", "interiors" // example tilemap layers
+      "sea"
     ]);
+
+    console.log(this.anims)
+
+    this.anims.create({
+      key: `player_swim`,
+      frames: this.anims.generateFrameNumbers(
+        "player_6_12", 
+        { start: 12, end: 23}
+      ),
+      frameRate: 15,
+      repeat: -1
+    });
     
-    this.player = new Player(this);
+    this.player = new Player(this, 0, 0, "player_6_12");
+    this.player.play("player_swim")
+
+    new Mob(this, "whale_1_14", 0, 0, { start: 0, end: 13 });
 
     this.physics.add.collider(this.player, this.hitboxes);
 
@@ -59,13 +86,14 @@ export class Map extends Phaser.Scene {
 
   update() {
 
-    this.keys = this.input.keyboard.addKeys(this.config.settings.keys);
+    this.cursor = this.input.keyboard.createCursorKeys();
 
-    if (this.keys.left.isDown) this.player.left();
-    else if (this.keys.right.isDown) this.player.right();
-    else if (this.keys.forward.isDown) this.player.down();
-    else if (this.keys.backward.isDown) this.player.up();
-    else this.player.stand();
+    console.log(this.cursor)
+
+
+    if (this.pointer) {
+      this.player.followMouse(this.pointer);
+    }
     
   }
 

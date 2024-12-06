@@ -1,6 +1,6 @@
 export class Mob extends Phaser.Physics.Arcade.Sprite {
 
-  constructor(scene, sprite_name, x, y, anim_config) {
+  constructor(scene, sprite_name, x, y, anim_config, message) {
 
     super(scene, x, y, sprite_name, 0)
     scene.add.existing(this);
@@ -20,6 +20,9 @@ export class Mob extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.play(`${sprite_name}_anim`);
+
+    this.message = message;
+    this.already_interacted = false;
 
   }
   

@@ -25,11 +25,15 @@ export class GameMap {
 
     for(var i=0; i<layers.length; i++) {
       let layer_name = layers[i];
-      map.createStaticLayer(layer_name, tilesets.get(layer_name), 0, 0);
+      let layer = map.createStaticLayer(
+        layer_name, 
+        tilesets.get(layer_name.replace(/\d+/g, '')), 
+        0, 0
+      );
+      layer.setDepth(0);
+      layer.setRenderOrder("right-down");
     }
-
-    /*
-
+    
     this.scene.hitboxes = this.scene.physics.add.group();
 
     for(var object of map.getObjectLayer('hitboxes').objects) {
@@ -48,8 +52,6 @@ export class GameMap {
       rect.body.allowGravity = false;
       this.scene.hitboxes.add(rect);
     }
-
-    */
     
   }
 }
